@@ -13,9 +13,9 @@ export default async function Home() {
             Dashboard
           </button>
         </Link>
-        <Link href="/signup">
+        <Link href="/signin">
           <button className="rounded-md bg-blue-400 p-2 m-4">
-            Sign Up
+            Sign In
           </button>
         </Link>
       </div>

@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 const jwt = require("jsonwebtoken");
@@ -7,7 +8,7 @@ let passwordSchema = z.string().min(5);
 export async function POST(req: NextRequest, res: NextResponse) {
   // console.log(req.body)
   let result = await req.json();
-  console.log(result)
+  console.log(result);
   let { username, password } = result.body;
   let validatedCredentials = {
     username: emailSchema.safeParse(username),
@@ -18,11 +19,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
     validatedCredentials.password.success
   ) {
     console.log(validatedCredentials);
-    let token = jwt.sign({ username, password }, "jwtsecret");
-    req.cookies.set(token);
+    let token = jwt.sign({ username }, "jwtsecret");
+    cookies().set({
+      name: "projectToken",
+      value: token,
+      httpOnly: true,
+      path: "/",
+    });
     // store the data in user database
-    let hashedPW = bcrypt.hash(password, 10) //store hashed pw in db then compare with bcrypt.compare()
-   
+    let hashedPW = bcrypt.hash(password, 10); //store hashed pw in db then compare with bcrypt.compare()
+
     return NextResponse.json({ msg: "user created successfully", token });
   } else {
     return NextResponse.json({ msg: "Invalid email or password" });

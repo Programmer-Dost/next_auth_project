@@ -38,7 +38,7 @@ export const options: NextAuthOptions = {
           console.log(user)
           return user;
         } else {
-          console.log("Invalid")
+          console.log("Invalid credentials")
           return null;
         }
       },
@@ -46,7 +46,7 @@ export const options: NextAuthOptions = {
   ],
   //You can also modify these 
     // pages: {
-    //   signIn: "/signup",
+    //   signIn: "/signin",
     //    signOut: "/signout",
     //   error: "/not-found",
     // },

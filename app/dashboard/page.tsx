@@ -9,7 +9,7 @@ export default function Article() {
     title: "",
     description: "",
   });
-  function fetcher(url: string) {
+  async function fetcher(url: string) {
     return axios
       .get(url, {
         headers: {
@@ -20,7 +20,7 @@ export default function Article() {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setPost({
           id: res.data.id,
           title: res.data.title,
@@ -44,9 +44,9 @@ export default function Article() {
     <div className="m-4">
       <p className="text-xl">You have reached me</p>
       {/* //try this when you are not changing the state to which swr is dependent i.e i{id state var in this case} */}
-      {/* {isValidating ? (  
+      {!isLoading && isValidating ? (  
         <div className="flex m-12 text-xl text-gray-700 "> Validating...</div>
-      ): null } */}
+      ): null }
       {isLoading ? (
         <div className="flex m-12 text-xl text-gray-700 "> Loading...</div>
       ) : (
